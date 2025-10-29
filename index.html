@@ -11,10 +11,6 @@
             flex-direction: column;
             align-items: center;
         }
-        #input {
-            width: 80%;
-            height: 200px;
-        }
         #output {
             margin-top: 20px;
             width: 80%;
@@ -27,9 +23,11 @@
     </style>
 </head>
 <body>
-    <h1>Mermaid Viewer (v11)</h1>
-    <label for="input">Paste mermaid code here:</label>
-    <textarea id="input" placeholder="Enter your Mermaid code here..."></textarea>
+    <h1 style="text-align: left; width: 80%;">Mermaid Viewer (v11)</h1>
+    <details open style="width: 80%;">
+      <summary>Paste mermaid code here:</summary>
+      <textarea id="input" placeholder="Enter your Mermaid code here..." style="width: 100%; height: 200px; margin-top: 10px;"></textarea>
+    </details>
     <button id="render">Render</button>
     <div id="output"></div>
 
