@@ -1,6 +1,6 @@
 # Mermaid Viewer
 
-A simple web-based viewer for Mermaid diagrams.
+A simple web-based viewer for Mermaid diagrams.  Mermaid code are often generated in AI code assistants which are useful diagrams.  This serves as an alternative to using the mermaid website to render diagrams, which has a limit if you save your diagram online. 
 
 ## How to use
 
