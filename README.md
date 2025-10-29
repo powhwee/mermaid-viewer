@@ -46,6 +46,6 @@ sequenceDiagram
     Note over C,A: Later refresh<br/>POST /token with grant_type=refresh_token
 ```
 
-Screenshot of viewer:
+## Screenshot of viewer:
 
 ![Viewer](screenshot.png "Viewer")
