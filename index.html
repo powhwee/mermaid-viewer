@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mermaid Viewer (v11)</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        #input {
+            width: 80%;
+            height: 200px;
+        }
+        #output {
+            margin-top: 20px;
+            width: 80%;
+        }
+        #render {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Mermaid Viewer (v11)</h1>
+    <textarea id="input" placeholder="Enter your Mermaid code here..."></textarea>
+    <button id="render">Render</button>
+    <div id="output"></div>
+
+    <script type="module">
+        // 3. Import mermaid from the CDN
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+
+        // We can run this immediately, no need for DOMContentLoaded
+        // because module scripts are 'deferred' by default.
+        mermaid.initialize({ startOnLoad: false });
+
+        const input = document.getElementById('input');
+        const output = document.getElementById('output');
+        const renderButton = document.getElementById('render');
+
+        const renderMermaid = async () => {
+            const mermaidCode = input.value;
+            if (mermaidCode) {
+                try {
+                    const renderId = 'mermaid-graph-' + Date.now();
+                    
+                    // 4. The render API now returns an object { svg, bindFunctions }
+                    const { svg, bindFunctions } = await mermaid.render(renderId, mermaidCode);
+                    
+                    output.innerHTML = svg;
+
+                    // 5. Call bindFunctions to make the diagram interactive
+                    if (bindFunctions) {
+                        bindFunctions(output);
+                    }
+
+                } catch (e) {
+                    console.error(e);
+                    output.innerHTML = `<strong>Error rendering diagram:</strong><br>${e.message}`;
+                }
+            } else {
+                output.innerHTML = '';
+            }
+        };
+
+        renderButton.addEventListener('click', renderMermaid);
+    </script>
+</body>
+</html>
