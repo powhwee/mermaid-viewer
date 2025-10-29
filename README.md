@@ -48,4 +48,4 @@ sequenceDiagram
 
 Screenshot of viewer:
 
-![Viewer](screenshot/screenshot.png "Viewer")
+![Viewer](screenshot.png "Viewer")
