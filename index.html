@@ -18,10 +18,11 @@
             width: 80%;
         }
 
-        #render {
+        .btn {
             padding: 10px 20px;
             font-size: 16px;
-            margin-top: 10px;
+            margin: 0 5px;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -33,7 +34,16 @@
         <textarea id="input" placeholder="Enter your Mermaid code here..."
             style="width: 100%; height: 200px; margin-top: 10px;"></textarea>
     </details>
-    <button id="render">Render</button>
+    <div style="width: 80%; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; margin-top: 10px;">
+        <div style="display: flex; gap: 10px;">
+            <button id="load" class="btn">Load</button>
+            <button id="download" class="btn">Download</button>
+        </div>
+        <button id="render" class="btn">Render</button>
+        <!-- Empty div to balance the grid for centering -->
+        <div></div>
+    </div>
+    <input type="file" id="file-input" style="display: none;" accept=".mmd,.txt,.md">
 
     <div id="output"></div>
 
@@ -112,6 +122,51 @@
         };
 
         renderButton.addEventListener('click', renderMermaid);
+
+        // --- Download Functionality ---
+        const downloadButton = document.getElementById('download');
+        downloadButton.addEventListener('click', () => {
+            const mermaidCode = input.value;
+            if (!mermaidCode) {
+                alert("Nothing to save!");
+                return;
+            }
+
+            const blob = new Blob([mermaidCode], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'mermaid-diagram.mmd'; // Default filename
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        });
+
+        // --- Load Functionality ---
+        const loadButton = document.getElementById('load');
+        const fileInput = document.getElementById('file-input');
+
+        loadButton.addEventListener('click', () => {
+            // This automatically triggers the browser's native file picker
+            // which allows the user to navigate and choose a file.
+            fileInput.click();
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                input.value = e.target.result;
+                // Auto-render on load
+                renderMermaid();
+            };
+            reader.readAsText(file);
+            // Reset value so reloading the same file works if needed
+            fileInput.value = '';
+        });
 
         const copyBtn = document.getElementById('copy-btn');
         const sampleCode = document.getElementById('sample-code');
