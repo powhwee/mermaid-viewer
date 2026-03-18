@@ -90,7 +90,7 @@
 
         // We can run this immediately, no need for DOMContentLoaded
         // because module scripts are 'deferred' by default.
-        mermaid.initialize({ startOnLoad: false });
+        mermaid.initialize({ startOnLoad: false, maxTextSize: 150000 });
 
         const input = document.getElementById('input');
         const output = document.getElementById('output');
